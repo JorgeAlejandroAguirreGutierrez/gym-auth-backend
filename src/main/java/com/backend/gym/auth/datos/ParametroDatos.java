@@ -24,9 +24,6 @@ public class ParametroDatos implements ApplicationRunner {
     	Optional<Parametro> ant=rep.findById((long) 1);
         if (!ant.isPresent()) {
             List<Parametro> parametros= new ArrayList<>();
-            //INICIO
-            parametros.add(new Parametro("", "inicio.jpg", "INICIO", true));
-            //FONDO INICIO SESION
             parametros.add(new Parametro("", "fondoiniciosesion.jpg", "FONDOINICIOSESION", true));
             //DESCRIPCION SLIDE
             parametros.add(new Parametro("", "Bienvenido a Gym-Up!_Gestionar tu gimnasio nunca había sido tan facil", "CONCEPTOSLIDE", true));
