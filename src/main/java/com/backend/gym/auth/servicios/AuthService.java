@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import com.backend.gym.auth.exception.ModeloExistenteException;
+import com.backend.gym.auth.exception.ModeloNoExistenteException;
 import com.backend.gym.auth.modelos.Auth;
 import com.backend.gym.auth.repositorios.IAuthRepository;
 import static com.backend.gym.auth.Constantes.LOGCLASS;
@@ -19,9 +20,6 @@ public class AuthService {
 
     @Autowired
     private IAuthRepository usuarioRepository;
-    
-    @Autowired 
-    private Environment environment;
 
     /**
      * Consulta el cliente por id
@@ -50,7 +48,7 @@ public class AuthService {
     public Optional<Auth> crear(Auth usuario) {
     	Optional<Auth> usuarioExiste=usuarioRepository.buscarIdentificacion(usuario.getIdentificacion());
     	if (usuarioExiste.isPresent()) {
-    		throw new ModeloExistenteException();
+    		return usuarioExiste;
     	}
     	logger.info(LOGMETHOD+Thread.currentThread().getStackTrace()[1].getMethodName()+LOGCLASS+this.getClass().getSimpleName());
     	return Optional.of(usuarioRepository.save(usuario));
@@ -79,7 +77,10 @@ public class AuthService {
      * @return Optional<Usuario>
      */
     public Optional<Auth> obtenerPorIdentificacionContrasena(String identificacion, String contrasena) {
-    	Optional<Auth> usuario=usuarioRepository.obtenerPorIdentificacionContrasena(identificacion, contrasena);
-    	return usuario;
+    	Optional<Auth> auth=usuarioRepository.obtenerPorIdentificacionContrasena(identificacion, contrasena);
+    	if(auth.isEmpty()) {
+    		throw new ModeloNoExistenteException();
+    	}
+    	return auth;
     }    
 }
