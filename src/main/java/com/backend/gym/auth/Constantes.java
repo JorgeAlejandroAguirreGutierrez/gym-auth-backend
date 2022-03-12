@@ -2,6 +2,7 @@ package com.backend.gym.auth;
 
 public class Constantes {
 	public static final String AUTHCONTROLLER = "/gym/auth";
+	public static final String MENSAJECONTROLLER = "/gym/mensaje";
 	public static final String PARAMETROCONTROLLER = "/gym/parametro";
 	
 	public static final String LOGMETHOD = "Ingresa al método: ";

@@ -17,16 +17,16 @@ public class AuthService {
 	private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
 
     @Autowired
-    private IAuthRepository usuarioRepository;
+    private IAuthRepository authRepository;
 
     /**
-     * Consulta el cliente por id
+     * Consulta un auth por id
      * @param id
-     * @return Cliente
+     * @return Auth
      */
     public Optional<Auth> obtener(long id) {
     	logger.info(LOGMETHOD+Thread.currentThread().getStackTrace()[1].getMethodName()+LOGCLASS+this.getClass().getSimpleName());
-        final Optional<Auth> usuario= usuarioRepository.findById(id);
+        final Optional<Auth> usuario= authRepository.findById(id);
         return usuario;
     }
     /**
@@ -35,50 +35,50 @@ public class AuthService {
      */
     public List<Auth> consultar() {
     	logger.info(LOGMETHOD+Thread.currentThread().getStackTrace()[1].getMethodName()+LOGCLASS+this.getClass().getSimpleName());
-        final List<Auth> usuarios = usuarioRepository.findAll();
+        final List<Auth> usuarios = authRepository.findAll();
         return usuarios;
     }
     /**
      * Crea un nuevo cliente
      * @param Auth
-     * @return Usuario 
+     * @return Auth 
      */
-    public Optional<Auth> crear(Auth usuario) {
-    	Optional<Auth> usuarioExiste=usuarioRepository.buscarIdentificacion(usuario.getIdentificacion());
-    	if (usuarioExiste.isPresent()) {
-    		return usuarioExiste;
+    public Optional<Auth> crear(Auth auth) {
+    	Optional<Auth> authExiste=authRepository.buscarIdentificacion(auth.getIdentificacion());
+    	if (authExiste.isPresent()) {
+    		return authExiste;
     	}
     	logger.info(LOGMETHOD+Thread.currentThread().getStackTrace()[1].getMethodName()+LOGCLASS+this.getClass().getSimpleName());
-    	return Optional.of(usuarioRepository.save(usuario));
+    	return Optional.of(authRepository.save(auth));
     }
     /**
-     * Actualiza un usuario
+     * Actualiza un auth
      * @param Auth
      * @return Optional<Usuario>
      */
     public Optional<Auth> actualizar(Auth usuario) {
     	logger.info(LOGMETHOD+Thread.currentThread().getStackTrace()[1].getMethodName()+LOGCLASS+this.getClass().getSimpleName());
-    	return Optional.of(usuarioRepository.save(usuario));
+    	return Optional.of(authRepository.save(usuario));
     }
     
     /**
-     * Elimina un cliente
+     * Elimina un auth
      * @param id
      */
     public void eliminar(long id) {
     	logger.info(LOGMETHOD+Thread.currentThread().getStackTrace()[1].getMethodName()+LOGCLASS+this.getClass().getSimpleName());
-    	usuarioRepository.deleteById(id);
+    	authRepository.deleteById(id);
     }
     
     /**
-     * Obtiene el  usuario por la identificacion
-     * @return Optional<Usuario>
+     * Obtiene el auth por la identificacion
+     * @return Optional<Auth>
      */
     public Optional<Auth> obtenerPorIdentificacionContrasena(String identificacion, String contrasena) {
-    	Optional<Auth> auth=usuarioRepository.obtenerPorIdentificacionContrasena(identificacion, contrasena);
+    	Optional<Auth> auth=authRepository.obtenerPorIdentificacionContrasena(identificacion, contrasena);
     	if(auth.isEmpty()) {
     		throw new ModeloNoExistenteException();
     	}
     	return auth;
-    }    
+    }	
 }
