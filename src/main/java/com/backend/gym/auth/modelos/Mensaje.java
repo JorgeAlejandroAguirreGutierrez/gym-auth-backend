@@ -1,5 +1,7 @@
 package com.backend.gym.auth.modelos;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "mensaje")
@@ -31,6 +37,11 @@ public class Mensaje {
     @Column(name = "observacion")
 	private String observacion;
 	
+	@CreationTimestamp
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+    @Column(name = "fecha_creacion")
+    private Timestamp fechaCreacion;
+	
 	public Mensaje() {
 		
 	}
@@ -51,5 +62,9 @@ public class Mensaje {
 	
 	public String getObservacion() {
 		return observacion;
+	}
+	
+	public Timestamp getFechaCreacion() {
+		return fechaCreacion;
 	}
 }
