@@ -10,6 +10,6 @@ import org.springframework.web.servlet.config.annotation.*;
 public class WebConfigurer implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-    	registry.addResourceHandler("/img/**").addResourceLocations("file:///" + System.getProperty("user.dir") + "/src/main/img/");
+    	registry.addResourceHandler("/assets/**").addResourceLocations("file:///" + System.getProperty("user.dir") + "/src/main/assets/");
     }
 }

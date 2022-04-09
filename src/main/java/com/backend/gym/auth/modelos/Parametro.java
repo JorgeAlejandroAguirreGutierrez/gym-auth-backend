@@ -44,6 +44,10 @@ public class Parametro {
 		this.activo=activo;
 	}
 	
+	public long getId() {
+		return id;
+	}
+	
 	public String getTitulo() {
 		return titulo;
 	}

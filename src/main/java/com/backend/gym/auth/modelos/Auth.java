@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "auth")
 public class Auth {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY )
     private long id;
 	
 	@NotNull
@@ -22,7 +22,6 @@ public class Auth {
     private String identificacion;
 	
 	@NotNull
-    @NotEmpty
     @Column(name = "contrasena")
 	private String contrasena;
 	

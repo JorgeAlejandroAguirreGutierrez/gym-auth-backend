@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.backend.gym.auth.Util;
 import com.backend.gym.auth.exception.ModeloNoExistenteException;
 import com.backend.gym.auth.modelos.Auth;
 import com.backend.gym.auth.repositorios.IAuthRepository;
@@ -30,7 +32,7 @@ public class AuthService {
         return usuario;
     }
     /**
-     * Consulta todos los clientes
+     * Consulta todos los auths
      * @return List<Usuario>
      */
     public List<Auth> consultar() {
@@ -39,16 +41,18 @@ public class AuthService {
         return usuarios;
     }
     /**
-     * Crea un nuevo cliente
+     * Crea un nuevo auth
      * @param Auth
      * @return Auth 
      */
     public Optional<Auth> crear(Auth auth) {
+    	logger.info(LOGMETHOD+Thread.currentThread().getStackTrace()[1].getMethodName()+LOGCLASS+this.getClass().getSimpleName());
     	Optional<Auth> authExiste=authRepository.buscarIdentificacion(auth.getIdentificacion());
     	if (authExiste.isPresent()) {
     		return authExiste;
     	}
-    	logger.info(LOGMETHOD+Thread.currentThread().getStackTrace()[1].getMethodName()+LOGCLASS+this.getClass().getSimpleName());
+    	String contrasena=Util.generarContrasena(auth.getIdentificacion());
+    	auth.setContrasena(contrasena);
     	return Optional.of(authRepository.save(auth));
     }
     /**
@@ -56,9 +60,9 @@ public class AuthService {
      * @param Auth
      * @return Optional<Usuario>
      */
-    public Optional<Auth> actualizar(Auth usuario) {
+    public Optional<Auth> actualizar(Auth auth) {
     	logger.info(LOGMETHOD+Thread.currentThread().getStackTrace()[1].getMethodName()+LOGCLASS+this.getClass().getSimpleName());
-    	return Optional.of(authRepository.save(usuario));
+    	return Optional.of(authRepository.save(auth));
     }
     
     /**

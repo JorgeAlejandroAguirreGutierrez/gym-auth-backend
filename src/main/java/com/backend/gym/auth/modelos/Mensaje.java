@@ -34,6 +34,11 @@ public class Mensaje {
 	
 	@NotNull
     @NotEmpty
+    @Column(name = "celular")
+	private String celular;
+	
+	@NotNull
+    @NotEmpty
     @Column(name = "observacion")
 	private String observacion;
 	
@@ -58,6 +63,10 @@ public class Mensaje {
 	
 	public String getCorreo() {
 		return correo;
+	}
+	
+	public String getCelular() {
+		return celular;
 	}
 	
 	public String getObservacion() {
