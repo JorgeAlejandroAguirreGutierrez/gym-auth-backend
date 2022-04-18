@@ -68,6 +68,16 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	    return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
+	@ExceptionHandler(EmpresaNoExisteException.class)
+	public final ResponseEntity<RestExceptionMessage> handleEmpresaNoExisteException(
+	    EmpresaNoExisteException ex, WebRequest req) {
+		RestExceptionMessage exceptionResponse = new RestExceptionMessage(Constantes.error_codigo_empresa_no_existe,
+	        ex.getMessage(),
+	        null
+	    );
+	    return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
 	@Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         List<String> errors = new ArrayList<>();

@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -26,23 +28,22 @@ public class Auth {
 	private String contrasena;
 	
 	@NotNull
-    @NotEmpty
-    @Column(name = "empresa")
-	private String empresa;
-	
-	@NotNull
     @Column(name="activo")
     private boolean activo;
+	
+	@ManyToOne
+    @JoinColumn(name = "empresa_id", nullable = true)
+    private Empresa empresa;
 	
 	public Auth() {
 		
 	}
 	
-	public Auth(String identificacion, String contrasena, String empresa, boolean activo ) {
+	public Auth(String identificacion, String contrasena, boolean activo, Empresa empresa ) {
 		this.identificacion=identificacion;
 		this.contrasena=contrasena;
-		this.empresa=empresa;
 		this.activo=activo;
+		this.empresa=empresa;
 	}
 	
 	public long getId() {
@@ -61,19 +62,19 @@ public class Auth {
 		this.contrasena = contrasena;
 	}
 	
-	public String getEmpresa() {
-		return empresa;
-	}
-	
-	public void setEmpresa(String empresa) {
-		this.empresa = empresa;
-	}
-	
 	public boolean isActivo() {
 		return activo;
 	}
 	
 	public void setActivo(boolean activo) {
 		this.activo = activo;
+	}
+	
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+	
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
 	}
 }

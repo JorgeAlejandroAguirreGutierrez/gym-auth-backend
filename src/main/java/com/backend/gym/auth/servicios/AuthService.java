@@ -6,9 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.backend.gym.auth.Util;
+import com.backend.gym.auth.exception.EmpresaNoExisteException;
 import com.backend.gym.auth.exception.ModeloNoExistenteException;
 import com.backend.gym.auth.modelos.Auth;
+import com.backend.gym.auth.modelos.Empresa;
 import com.backend.gym.auth.repositorios.IAuthRepository;
+import com.backend.gym.auth.repositorios.IEmpresaRepository;
+
 import static com.backend.gym.auth.Constantes.LOGCLASS;
 import static com.backend.gym.auth.Constantes.LOGMETHOD;
 import java.util.List;
@@ -20,6 +24,9 @@ public class AuthService {
 
     @Autowired
     private IAuthRepository authRepository;
+    
+    @Autowired
+    private IEmpresaRepository empresaRepository;
 
     /**
      * Consulta un auth por id
@@ -51,8 +58,13 @@ public class AuthService {
     	if (authExiste.isPresent()) {
     		return authExiste;
     	}
+    	Optional<Empresa> empresa=empresaRepository.buscarEndpoint(auth.getEmpresa().getEndpoint());
+    	if (empresa.isEmpty()) {
+    		throw new EmpresaNoExisteException();
+    	}
     	String contrasena=Util.generarContrasena(auth.getIdentificacion());
     	auth.setContrasena(contrasena);
+    	auth.setEmpresa(empresa.get());
     	return Optional.of(authRepository.save(auth));
     }
     /**

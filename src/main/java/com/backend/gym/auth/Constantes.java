@@ -21,6 +21,7 @@ public class Constantes {
     public static String error_codigo_suscripcion_invalida="4003";
     public static String error_codigo_sesion_invalida="4004";
     public static String error_codigo_datos_invalidos="4005";
+    public static String error_codigo_empresa_no_existe="4006";
     public static String error_codigo_generico="4000";
 	
 	
