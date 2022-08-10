@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.backend.gym.auth.Util;
 import com.backend.gym.auth.exception.EmpresaNoExisteException;
+import com.backend.gym.auth.exception.ModeloExistenteException;
 import com.backend.gym.auth.exception.ModeloNoExistenteException;
 import com.backend.gym.auth.modelos.Auth;
 import com.backend.gym.auth.modelos.Empresa;
@@ -56,7 +57,7 @@ public class AuthService {
     	logger.info(LOGMETHOD+Thread.currentThread().getStackTrace()[1].getMethodName()+LOGCLASS+this.getClass().getSimpleName());
     	Optional<Auth> authExiste=authRepository.buscarIdentificacion(auth.getIdentificacion());
     	if (authExiste.isPresent()) {
-    		return authExiste;
+    		throw new ModeloExistenteException();
     	}
     	Optional<Empresa> empresa=empresaRepository.buscarEndpoint(auth.getEmpresa().getEndpoint());
     	if (empresa.isEmpty()) {
