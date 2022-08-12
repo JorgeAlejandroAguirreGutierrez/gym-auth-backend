@@ -1,0 +1,67 @@
+{
+	"info": {
+		"_postman_id": "8e9fb2b8-87fa-4bb5-a784-b180c6b801d0",
+		"name": "OSPO_METRICS-meetchannelevent",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "consultmeetchannelevent",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8090/api/OSPOMetrics/consultmeetchannelevent",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"OSPOMetrics",
+						"consultmeetchannelevent"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createMeetChannelEvent",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"meetchannelid\": 1,\r\n    \"name\": \"La primera herramienta contra la complejidad\",\r\n    \"detail\": \"Elixir es un lenguaje que nos presenta varias herramientas para combatir la complejidad en el desarrollo y mantención de software. Sin duda principal entre ellas está el modelo de concurrencia por actores, pero otro factor de suma importancia es la inmutabilidad. La inmutabilidad permite reducir el nivel de complejidad y esfuerzo mental al crear software—pero aún más importante es para mantener software que por definición se considera legado a partir de su creación. Exploraremos las ventajas que brinda la inmutabilidad y por qué es la primera herramienta que trae Elixir contra la complejidad en desarrollo de software.\",\r\n    \"date\": \"24/03/2022\",\r\n    \"urlyoutube\": \"\",\r\n    \"urltwitch\": \"\",\r\n    \"assistants\": \"201\",\r\n    \"state\": 1\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8090/api/OSPOMetrics/createmeetchannelevent",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"OSPOMetrics",
+						"createmeetchannelevent"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

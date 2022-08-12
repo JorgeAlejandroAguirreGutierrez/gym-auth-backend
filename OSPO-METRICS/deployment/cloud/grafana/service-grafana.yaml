@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: #{service-name}#
+    app.bancolombia.com.co/env: #{env}#
+    app.bancolombia.com.co/cost-center: #{cost-center}#
+    app.bancolombia.com.co/application-code: #{application-code}#
+    app.bancolombia.com.co/project: #{projectname}#
+    app.bancolombia.com.co/pmo: #{pmo}#
+  name: #{service-name}#-service
+spec:
+  ports:
+    - port: 3000
+      protocol: TCP
+      targetPort: http-grafana
+  selector:
+    app: grafana
+  sessionAffinity: None
+  type: LoadBalancer

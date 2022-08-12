@@ -1,0 +1,46 @@
+apply plugin: 'org.springframework.boot'
+
+dependencies {
+	implementation project( ':async-event-bus')
+	implementation project( ':async-event-handler')
+	implementation project(':secret-consumer')
+	implementation project(':elastic-consumer')
+	implementation project(':open-search-helper')
+	implementation project(':azure-consumer')
+	implementation project(':rest-consumer')
+	implementation project(':reactive-web')
+    implementation project(':model')
+    implementation project(':usecase')
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation project( ':r2dbc-postgresql')
+    implementation 'org.reactivecommons:async-commons-rabbit-starter:1.0.5'
+    implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
+    implementation group: 'io.r2dbc', name: 'r2dbc-postgresql', version: '0.8.12.RELEASE'
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.3.5'
+
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.7.1'
+    implementation 'junit:junit:4.13.1'
+
+    runtimeOnly('org.springframework.boot:spring-boot-devtools')
+}
+
+task explodedJar(type: Copy) {
+    with jar
+    into "${buildDir}/exploded"
+}
+
+jar {
+    // To disable the *-plain.jar
+    enabled = false
+}
+
+bootJar {
+    // Sets output jar name
+    archiveFileName = "${project.getParent().getName()}.${archiveExtension.get()}"
+}
+
+
+test {
+    useJUnitPlatform()
+}

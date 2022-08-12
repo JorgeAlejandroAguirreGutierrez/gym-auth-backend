@@ -1,0 +1,33 @@
+dependencies {
+    implementation project(':usecase')
+    implementation project(':model')
+    implementation project(':secret-consumer')
+    implementation project(':async-event-bus')
+    implementation project(':open-search-helper')
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.9'
+
+    //OpenApi
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-webflux-core', version: '1.6.9'
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-webflux-ui', version: '1.6.9'
+
+    //r2dbc
+    implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
+    implementation group: 'io.r2dbc', name: 'r2dbc-postgresql', version: '0.8.12.RELEASE'
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.3.5'
+    compileOnly group: 'javax.servlet', name: 'servlet-api', version: '2.5'
+
+    //Spring Security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.springframework.security:spring-security-oauth2-jose'
+    implementation 'org.springframework.security:spring-security-oauth2-resource-server'
+    implementation 'com.github.ben-manes.caffeine:caffeine:3.1.1'
+
+    //Unit Test
+    testImplementation 'org.springframework.security:spring-security-test'
+}
+tasks.withType(Test){
+    useJUnitPlatform()
+}

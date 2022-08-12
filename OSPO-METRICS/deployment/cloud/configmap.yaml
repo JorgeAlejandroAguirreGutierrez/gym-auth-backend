@@ -1,0 +1,33 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: #{service}#-configmap-#{version}#
+data:
+  application.yaml: |-
+    springdoc:
+      api-docs:
+        groups:
+          enable: true
+        path: /OSPOMetrics/v3/api-docs
+      swagger-ui:
+        path: /OSPOMetrics/swagger-ui.html
+    server:
+      port: 8080
+    spring:
+      application:
+        name: OSPOMetrics
+    adapter:
+      elasticconsumer:
+        timeout: 5000
+        url: #{endpoint-elastic-consumer}#
+      restconsumer:
+        github:
+          timeout: 5000
+          url: #{endpoint-rest-consumer}#
+          mimeType: application/vnd.github.v3+json
+          userAgent: OSPOMetrics
+    aws:
+      secret:
+        opensearch: #{ospo-metrics-opensearch-secret}#
+        github: #{ospo-metrics-key-rsa-secret}#
+        metric: #{ospo-metrics-cnx-rds-secret}#

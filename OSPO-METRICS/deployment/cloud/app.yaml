@@ -1,0 +1,99 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: #{service-name}#-deployment
+  namespace: #{namespace}#
+  labels:
+    name: #{service-name}#-deployment
+    app.bancolombia.com.co/env: #{env}#
+    app.bancolombia.com.co/cost-center: #{cost-center}#
+    app.bancolombia.com.co/application-code: #{application-code}#
+    app.bancolombia.com.co/project: #{projectname}#
+    app.bancolombia.com.co/pmo: #{pmo}#
+spec:
+  replicas: #{replicas}#
+  selector:
+    matchLabels:
+      app: #{projectname}#
+      pod: #{service-name}#-pod
+  template:
+    metadata:
+      labels:
+        app: #{projectname}#
+        pod: #{service-name}#-pod
+        name: #{service-name}#-deployment
+        app.bancolombia.com.co/project: #{projectname}#
+    spec:
+      serviceAccountName: #{service-account}#   
+      containers:
+      - name: #{service-name}#-container
+        image: #{image_datasource_aws_backend}#
+        tty: true
+        stdin: true
+        imagePullPolicy: Always
+        securityContext:
+          privileged: true
+        ports:
+        - containerPort: #{http-port}#
+          name: port-http
+        - containerPort: #{https-port}#
+          name: port-https
+        readinessProbe:
+            httpGet:
+              path: #{readinessProbe-path}#
+              port: #{readinessProbe-port}#
+            periodSeconds: #{readinessProbe-periodSeconds}#
+            timeoutSeconds: #{readinessProbe-timeoutSeconds}#
+            successThreshold: #{readinessProbe-successThreshold}#
+            initialDelaySeconds: #{readinessProbe-initialDelaySeconds}#
+        resources:
+          limits:
+            cpu: #{cpu-limit}#
+            memory: #{memory-limit}#
+          requests:
+            cpu: #{request-cpu}#
+            memory: #{request-memory}#
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: update-opensearch-index
+  namespace: #{namespace}#
+spec:
+  schedule: "#{crontab}#"
+  jobTemplate:
+    spec:
+      activeDeadlineSeconds: 60
+      template:
+        spec:
+          containers:
+          - name: cron-job
+            image: #{cron-job-image}#
+            imagePullPolicy: IfNotPresent
+            command:
+            - /bin/sh
+            - -c
+            - date; curl -v #{endpoint-cronjob}#
+          restartPolicy: OnFailure
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: #{service-name}#
+  namespace: #{namespace}#
+  labels:
+    app.bancolombia.com.co/env: #{env}#
+    app.bancolombia.com.co/cost-center: #{cost-center}#
+    app.bancolombia.com.co/application-code: #{application-code}#
+    app.bancolombia.com.co/project: #{projectname}#
+    app.bancolombia.com.co/pmo: #{pmo}#
+spec:
+  selector:
+    app: #{projectname}#
+    pod: #{service-name}#-pod
+    #name: #{service-name}#-deployment
+  ports:
+    - name: http
+      targetPort: #{container-port}#
+      port: 80
+  publishNotReadyAddresses: false

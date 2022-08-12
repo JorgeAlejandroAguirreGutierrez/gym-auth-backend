@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: #{storage_grafana_aws}#
+metadata:
+  labels:
+    app: #{service-name}#
+    app.bancolombia.com.co/env: #{env}
+    app.bancolombia.com.co/cost-center: #{cost-center}
+    app.bancolombia.com.co/application-code: #{application-code}#
+    app.bancolombia.com.co/project: #{project-name}#
+    app.bancolombia.com.co/pmo: #{pmo}#
+  annotations:
+    volume.beta.kubernetes.io/storage-provisioner: kubernetes.io/aws-ebs
+  name: #{service-name}#-claim

@@ -1,0 +1,67 @@
+{
+	"info": {
+		"_postman_id": "4b029352-4caa-4f99-9218-90bf9331a8a9",
+		"name": "OSPO_METRICS-meetchannel",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getMeetChannelAndAll",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8090/api/OSPOMetrics/consultmeetchannel",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"OSPOMetrics",
+						"consultmeetchannel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createMeetChannel",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"name\":\"Elixir Colombia\",\r\n    \"about\":\"Compartir conocimiento sobre Elixir a través de casos de uso, casos de éxito e iniciativas open source, así como promover la adopción del lenguaje.\",\r\n    \"location\":\"Medellín, Colombia\",\r\n    \"members\": 58\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8090/api/OSPOMetrics/createmeetchannel",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"OSPOMetrics",
+						"createmeetchannel"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
